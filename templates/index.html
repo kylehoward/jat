@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Sites</title>
+</head>
+<body>
+    <h1>Job Search Sites</h1>
+    <ul>
+    {% for name, link in sites %}
+        <li>
+            <a href="{{ link }}" target="_blank">{{ name }}</a> 
+            ( #{{ site_counts[name] }} )
+        </li>
+    {% endfor %}
+    </ul>
+    <p>
+        <a href="{{ url_for('tracker') }}">Track Applications</a> | 
+        <a href="{{ url_for('report') }}">View Report</a> | 
+        <a href="{{ url_for('management') }}">Manage Visibility</a> | 
+        <a href="{{ url_for('settings') }}">Report Email Settings</a>
+    </p>
+</body>
+</html>

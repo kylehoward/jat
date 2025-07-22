@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Application Management</title>
+</head>
+<body>
+    <h1>Manage Application Visibility</h1>
+    <form method="GET" action="{{ url_for('management') }}">
+        <label>
+            <input type="checkbox" name="show_hidden" value="1" {% if show_hidden %}checked{% endif %}/>
+            Show Inactive/Hidden Applications
+        </label>
+        <button type="submit">Update</button>
+    </form>
+    <table border="1">
+        <tr>
+            <th>Site</th><th>Position</th><th>Status</th><th>Last Update</th><th>Visible</th>
+        </tr>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.site }}</td>
+            <td>{{ app.position }}</td>
+            <td>{{ app.status }}</td>
+            <td>{{ app.last_update.strftime('%Y-%m-%d') }}</td>
+            <td>{{ "Yes" if app.visible else "No" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>
+        <a href="{{ url_for('index') }}">Back to Home</a> | 
+        <a href="{{ url_for('report') }}">View Report</a>
+    </p>
+</body>
+</html>

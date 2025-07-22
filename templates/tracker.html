@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Application Tracker</title>
+</head>
+<body>
+    <h1>Add Application</h1>
+    <form method="POST">
+        <label>Site:</label>
+        <select name="site">{% for name, link in sites %}
+            <option value="{{ name }}">{{ name }}</option>{% endfor %}
+        </select><br>
+        <label>Position:</label>
+        <input type="text" name="position"/><br>
+        <label>Status:</label>
+        <select name="status">
+            <option>Applied</option>
+            <option>Interviewing</option>
+            <option>Rejected</option>
+            <option>Offer</option>
+        </select><br>
+        <label>Notes:</label><br>
+        <textarea name="notes" rows="3" cols="40"></textarea><br>
+        <button type="submit">Add</button>
+    </form>
+    <h2>Tracked Applications</h2>
+    <table border="1">
+        <tr><th>Site</th><th>Position</th><th>Status</th><th>Last Update</th><th>Notes</th></tr>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.site }}</td>
+            <td>{{ app.position }}</td>
+            <td>{{ app.status }}</td>
+            <td>{{ app.last_update.strftime('%Y-%m-%d') }}</td>
+            <td>{{ app.notes | default('', true) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>
+        <a href="{{ url_for('index') }}">Back to Home</a> | 
+        <a href="{{ url_for('report') }}">View Report</a>
+    </p>
+</body>
+</html>

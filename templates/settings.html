@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report Email Settings</title>
+</head>
+<body>
+    <h1>Configure Report Email SMTP</h1>
+    <form method="POST">
+        <label>SMTP Username:</label>
+        <input type="text" name="smtp_username" value="{{ settings.smtp_username or '' }}"/><br>
+        <label>SMTP Password:</label>
+        <input type="password" name="smtp_password"/><br>
+        <button type="submit">Save Settings</button>
+    </form>
+    <p>
+        <a href="{{ url_for('index') }}">Back to Home</a> | 
+        <a href="{{ url_for('report') }}">View Report</a>
+    </p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>

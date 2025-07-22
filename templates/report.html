@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Applications Report</title>
+</head>
+<body>
+    <h1>Applications by Site</h1>
+    <form method="POST" action="{{ url_for('report') }}">
+        Start Date: <input type="date" name="start_date"/>
+        End Date: <input type="date" name="end_date"/>
+        <button type="submit">Preview Report</button>
+    </form>
+    <form method="POST" action="{{ url_for('send_report') }}">
+        Start Date: <input type="date" name="start_date"/>
+        End Date: <input type="date" name="end_date"/>
+        SMTP Password: <input type="password" name="smtp_password" required/>
+        <button type="submit">Send Report</button>
+    </form>
+    <table border="1">
+        <tr>
+            <th>Site</th><th>Position</th><th>Status</th><th>Last Update</th>
+        </tr>
+        {% for app in data %}
+        <tr>
+            <td>{{ app.site }}</td>
+            <td>{{ app.position }}</td>
+            <td>{{ app.status }}</td>
+            <td>{{ app.last_update.strftime('%Y-%m-%d') }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h2>Platform Totals</h2>
+    <table border="1">
+        <tr><th>Platform</th><th>Total Apps</th><th>Active Apps</th></tr>
+        {% for platform, _ in sites %}
+        <tr>
+            <td>{{ platform }}</td>
+            <td>{{ site_counts[platform] }}</td>
+            <td>{{ active_counts[platform] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>
+        <a href="{{ url_for('index') }}">Back to Home</a> | 
+        <a href="{{ url_for('settings') }}">Config Email Settings</a>
+    </p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
